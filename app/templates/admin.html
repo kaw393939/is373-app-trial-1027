@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Admin area{% endblock %}
+{% block content %}
+<section class="panel" aria-labelledby="admin-title">
+  <p class="eyebrow">Admin area</p>
+  <h1 id="admin-title">Administration</h1>
+  <p>Welcome, {{ user.username }}. This is the project’s administration area.</p>
+  <p><a href="/dashboard">Return to your dashboard</a></p>
+</section>
+{% endblock %}
