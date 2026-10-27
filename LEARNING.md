@@ -29,10 +29,10 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 
 ## APP-003
 
-- Prediction: Pending.
-- Check interpretation: Pending.
-- Browser observation: Pending.
-- Keep decision: Pending.
-- Review: Pending.
-- Help/gaps: Pending.
-- Evidence links / next step: Keep APP-002 before agreeing this lesson.
+- Prediction: Synthetic learner: “It should still reject the request. Hiding the link won’t stop someone from typing the URL themselves.”
+- Check interpretation: Synthetic learner: the actual existing-session role test catches remembering the role only at login, which could let a downgraded admin keep access. Its allowed200/denied403 requests passed.
+- Browser observation: Synthetic inspection of supplied actual UI: access followed the current role during the same login; typing the URL did not bypass the boundary. Instructor actually tested direct member denial, CLI promotion/admin success and downgrade/denial without reauthentication, plus the denied REST link.
+- Keep decision: Synthetic learner: “I’d keep it. Both the page and API reject members, and downgrading the account removes access without needing a new login.”
+- Review: Synthetic learner approved these excerpts before publication: “That matches my simulated replies.” Asked to preserve the distinction between actual checks and responses to supplied results. Accuracy review only.
+- Help/gaps: AI adopted the upstream role example and ran actual CLI/browser checks. The coach supplied actual UI/test states for these model replies. No independent human understanding or production security claim is established.
+- Evidence links / next step: [Own issue #5](https://github.com/kaw393939/is373-app-trial-1027/issues/5); full APP-003 Black/Pylint, 98 foundation + 18 feature contracts + 2 Chromium journeys passed. Review this synthetic record before publishing; deployment stays outside scope.

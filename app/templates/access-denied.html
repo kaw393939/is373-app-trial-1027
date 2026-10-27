@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Admin access required{% endblock %}
+{% block content %}
+<section class="panel" aria-labelledby="denied-title">
+  <p class="eyebrow">403 · Permission check</p>
+  <h1 id="denied-title">Admin access required</h1>
+  <p>You are logged in as a member. This page is available to admins.</p>
+  <p><a href="/dashboard">Return to your dashboard</a></p>
+</section>
+{% endblock %}
