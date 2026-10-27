@@ -9,7 +9,7 @@ actual evidence; pending is a valid state. Keep explanations/help in
 - **Current feature:** APP-003.
 - **Status:** Three stages implemented and locally checked; synthetic keep decisions made. Actual GitHub state is linked per issue below.
 - **Next step:** Review the APP-003 PR and its actual checks/state; deployment is a later agreed scope.
-- **Implementation marker:** `studio.json` now declares `implemented_through: 3`; the untouched template starts at0.
+- **Implementation marker:** `studio.json` now declares `implemented_through: 3`; the untouched template starts at 0.
 
 This repository owns application code. Server/proxy changes and production
 deployment are outside these three local-development lessons. Prepared helpers
@@ -67,7 +67,7 @@ permissions, including for an existing session after a role change.
 |---|---|
 | Intended admin-only result | Small admin page and JSON confirmation; current database role enforced on every request |
 | Actual allowed/denied request evidence | Anonymous401, member403, admin200 at API; browser login redirect/member denial/admin page; immediate downgrade |
-| Own issue / branch / PR | [Issue #5](https://github.com/kaw393939/is373-app-trial-1027/issues/5), feat/app-003; PR will link this issue |
+| Own issue / branch / PR | [Issue #5](https://github.com/kaw393939/is373-app-trial-1027/issues/5), feat/app-003; [PR #6](https://github.com/kaw393939/is373-app-trial-1027/pull/6) |
 
 **Keep when:** a direct request cannot bypass the role boundary, role changes
 take effect as specified, new signup remains member-only, and full cumulative
