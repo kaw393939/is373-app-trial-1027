@@ -112,10 +112,12 @@ def test_current_lesson_browser_journey(page, server):
     """Only implemented scope is claimed; stage zero is explicitly foundation only."""
     page.goto(server.url)
     if LEVEL < 2:
-        page.get_by_role("link", name="See the next step").click()
-        expect(
-            page.get_by_text("signup and login are the next lesson", exact=False)
-        ).to_be_visible()
+        primary = page.locator(".hero .button")
+        destination = primary.get_attribute("href")
+        assert destination and destination.startswith("#") and len(destination) > 1
+        primary.click()
+        expect(page.locator(destination)).to_be_in_viewport()
+        assert page.request.get(server.url + "/signup").status == 404
         assert page.request.get(server.url + "/not-a-feature").status == 404
         return
     username = "browser_" + uuid.uuid4().hex[:10]
