@@ -1,16 +1,20 @@
 {
-  "name": "Your Project",
-  "audience": "Not chosen yet",
-  "archetype": "Not chosen yet",
-  "promise": "Not chosen yet",
-  "headline": "A small idea. A real application.",
-  "summary": "This working page is your starting point. Give it a purpose and a brand, then build accounts and permissions one feature at a time.",
-  "voice": ["Not chosen yet"],
-  "design_direction": "Not chosen yet",
+  "name": "Field Notes",
+  "audience": "Students who want a small change of scene between busy days; an unvalidated audience hypothesis",
+  "archetype": "Explorer",
+  "promise": "Small detours. Fresh perspectives.",
+  "headline": "Find something worth stepping out for.",
+  "summary": "A little curiosity can change an ordinary afternoon. Make a place for fresh perspectives, one small step beyond your usual route.",
+  "voice": [
+    "curious",
+    "welcoming",
+    "plainspoken"
+  ],
+  "design_direction": "Modernist: a clear grid, generous space and strong type keep the invitation easy to act on.",
   "palette": {
-    "ink": "#182C34",
-    "paper": "#F6F5EF",
-    "accent": "#285A50",
+    "ink": "#173C3F",
+    "paper": "#F4F5EB",
+    "accent": "#28665C",
     "surface": "#FFFFFF"
   }
 }

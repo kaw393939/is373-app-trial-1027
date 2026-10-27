@@ -7,8 +7,8 @@ actual evidence; pending is a valid state. Keep explanations/help in
 ## Current stage
 
 - **Current feature:** APP-001.
-- **Status:** Neutral foundation; learner scope and decisions pending.
-- **Next step:** Confirm the local clone and SSH origin, run setup and try the page.
+- **Status:** APP-001 implementation in progress; instructor-operated synthetic trial.
+- **Next step:** Check the adopted Field Notes homepage, then inspect it in the browser.
 - **Implementation marker:** `studio.json` starts at `implemented_through: 0`.
 
 This repository owns application code. Server/proxy changes and production
@@ -23,10 +23,10 @@ Keep account actions honest about their unfinished state.
 
 | Decision | Agreement |
 |---|---|
-| Visitor and concrete use situation | Pending |
-| Reused IS117 brand, or name / promise / primary archetype | Pending |
-| One visible choice and visitor benefit | Pending |
-| Own issue / branch / PR | Pending |
+| Visitor and concrete use situation | Students wanting a small change of scene between busy days; unvalidated hypothesis |
+| Reused IS117 brand, or name / promise / primary archetype | AI-suggested Field Notes / Small detours. Fresh perspectives. / Explorer, adopted in simulation |
+| One visible choice and visitor benefit | Warm paper and uncluttered layout; synthetic learner predicts a break from school and an easier choice |
+| Own issue / branch / PR | [Issue #1](https://github.com/kaw393939/is373-app-trial-1027/issues/1), feat/app-001; PR will link this issue |
 
 **Keep when:** the agreed identity is visible and usable at desktop/narrow widths;
 full foundation + APP-001 checks pass; AI review and the learner's actual check
@@ -81,7 +81,7 @@ customer research or claims that a timestamp proves learning.
 
 | Feature | Files / own issue / PR | Actual checks and learner observations | Kept / GitHub state |
 |---|---|---|---|
-| APP-001 | Pending | Not run; learner contributions pending | Pending |
+| APP-001 | [Own issue #1](https://github.com/kaw393939/is373-app-trial-1027/issues/1); app/brand.json, app/templates/home.html, app/static/logo.svg; upstream example adopted | Full Black/Pylint, 93 foundation + 2 homepage + 2 actual Chromium checks passed. Synthetic inspection led to a clearer honest CTA; see LEARNING | Synthetic keep decision; publication pending |
 | APP-002 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 | APP-003 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 
