@@ -203,6 +203,47 @@ def test_unicode_csrf_form_values_are_rejected_without_mutation(client, settings
     assert client.get("/api/me").status_code == 401
 
 
+def test_wrong_html_login_retains_only_the_validated_username(client):
+    """A password mistake should not require retyping a valid username."""
+    register(client)
+    form = client.get("/login")
+    token = re.search(r'name="csrf_token" value="([^"]+)"', form.text).group(1)
+    wrong_password = "a deliberately wrong password"
+    response = client.post(
+        "/login",
+        data={
+            "username": " LEARNER ",
+            "password": wrong_password,
+            "csrf_token": token,
+        },
+    )
+    assert response.status_code == 401
+    username = re.search(r'<input[^>]*name="username"[^>]*>', response.text).group(0)
+    password = re.search(r'<input[^>]*name="password"[^>]*>', response.text).group(0)
+    assert 'value="learner"' in username
+    assert "value=" not in password
+    assert wrong_password not in response.text
+    assert PASSWORD not in response.text
+    assert client.get("/api/me").status_code == 401
+
+
+def test_duplicate_html_signup_retains_username_without_password(client):
+    """An unavailable username error keeps only the validated, normalized identity."""
+    register(client)
+    form = client.get("/signup")
+    token = re.search(r'name="csrf_token" value="([^"]+)"', form.text).group(1)
+    response = client.post(
+        "/signup",
+        data={**credentials(), "username": "LEARNER", "csrf_token": token},
+    )
+    assert response.status_code == 409
+    username = re.search(r'<input[^>]*name="username"[^>]*>', response.text).group(0)
+    password = re.search(r'<input[^>]*name="password"[^>]*>', response.text).group(0)
+    assert 'value="learner"' in username
+    assert "value=" not in password
+    assert PASSWORD not in response.text
+
+
 def test_browser_forms_have_a_recoverable_signup_login_logout_path(client):
     """HTML navigation reaches the same guarded services as the JSON endpoints."""
     assert (

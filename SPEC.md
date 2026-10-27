@@ -6,9 +6,9 @@ actual evidence; pending is a valid state. Keep explanations/help in
 
 ## Current stage
 
-- **Current feature:** APP-001.
-- **Status:** APP-001 implementation in progress; instructor-operated synthetic trial.
-- **Next step:** Check the adopted Field Notes homepage, then inspect it in the browser.
+- **Current feature:** APP-002.
+- **Status:** APP-001 kept at its checked merge; APP-002 in progress, instructor simulation.
+- **Next step:** Check the account flow, then inspect signup/login/logout in the browser.
 - **Implementation marker:** `studio.json` starts at `implemented_through: 0`.
 
 This repository owns application code. Server/proxy changes and production
@@ -26,7 +26,7 @@ Keep account actions honest about their unfinished state.
 | Visitor and concrete use situation | Students wanting a small change of scene between busy days; unvalidated hypothesis |
 | Reused IS117 brand, or name / promise / primary archetype | AI-suggested Field Notes / Small detours. Fresh perspectives. / Explorer, adopted in simulation |
 | One visible choice and visitor benefit | Warm paper and uncluttered layout; synthetic learner predicts a break from school and an easier choice |
-| Own issue / branch / PR | [Issue #1](https://github.com/kaw393939/is373-app-trial-1027/issues/1), feat/app-001; PR will link this issue |
+| Own issue / branch / PR | [Issue #1](https://github.com/kaw393939/is373-app-trial-1027/issues/1), feat/app-001; [PR #2](https://github.com/kaw393939/is373-app-trial-1027/pull/2) |
 
 **Keep when:** the agreed identity is visible and usable at desktop/narrow widths;
 full foundation + APP-001 checks pass; AI review and the learner's actual check
@@ -41,9 +41,9 @@ helpers; keep data local. New accounts cannot choose their role.
 
 | Decision | Agreement |
 |---|---|
-| Expected public/private behavior and account flow | Pending |
-| Valid and rejected cases to demonstrate | Pending |
-| Own issue / branch / PR | Pending |
+| Expected public/private behavior and account flow | Public member-only signup; private API401 before login and200 after; browser redirects to login; logout revokes server session |
+| Valid and rejected cases to demonstrate | Valid signup/login; duplicate/invalid signup, wrong credentials, missing CSRF, anonymous/revoked/expired session; restart persistence |
+| Own issue / branch / PR | [Issue #3](https://github.com/kaw393939/is373-app-trial-1027/issues/3), feat/app-002; PR will link this issue |
 
 **Keep when:** the agreed forms/API work; duplicate/invalid signup and wrong
 credentials are rejected; passwords are hashed; authentication uses validated,
@@ -81,8 +81,8 @@ customer research or claims that a timestamp proves learning.
 
 | Feature | Files / own issue / PR | Actual checks and learner observations | Kept / GitHub state |
 |---|---|---|---|
-| APP-001 | [Own issue #1](https://github.com/kaw393939/is373-app-trial-1027/issues/1); app/brand.json, app/templates/home.html, app/static/logo.svg; upstream example adopted | Full Black/Pylint, 93 foundation + 2 homepage + 2 actual Chromium checks passed. Synthetic inspection led to a clearer honest CTA; see LEARNING | Synthetic keep decision; publication pending |
-| APP-002 | Pending | Unfinished; explicit contracts not yet passed | Pending |
+| APP-001 | [Own issue #1](https://github.com/kaw393939/is373-app-trial-1027/issues/1); app/brand.json, app/templates/home.html, app/static/logo.svg; upstream example adopted | Full Black/Pylint, 93 foundation + 2 homepage + 2 actual Chromium checks passed. Synthetic inspection led to a clearer honest CTA; see LEARNING | Merged [PR #2](https://github.com/kaw393939/is373-app-trial-1027/pull/2), issue closed, selected merge checks passed; historical status exported upstream |
+| APP-002 | [Own issue #3](https://github.com/kaw393939/is373-app-trial-1027/issues/3); app/features/accounts.py, signup/login/dashboard templates; upstream example adopted | Full Black/Pylint,98 foundation + 14 contracts + 2 Chromium journeys passed; real manual account journey; synthetic explanations in LEARNING | Synthetic keep decision; publication pending |
 | APP-003 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 
 The instructor's reference branches show possible implementations. They do not

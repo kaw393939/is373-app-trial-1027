@@ -325,12 +325,54 @@ def display(result):
             name for name, recorded in result["learner_records"].items() if not recorded
         )
         print("👉 Next: discuss " + missing.lower() + " using your actual experience.")
-    elif not all(result["publication"].values()):
-        print(
-            "👉 Next: publish the reviewed work and use the clean linked PR revision."
-        )
     else:
-        print(
-            "👉 Next: review the issue, PR and check job with your coach, "
-            "then close the issue."
+        print("👉 Next: " + publication_next_step(result))
+
+
+def publication_next_step(result):
+    """Respond to the actual pending GitHub step instead of reopening finished work."""
+    publication = result["publication"]
+    remote = result["github"]
+    prerequisites = (
+        (
+            not publication["tracked"] or not publication["clean"],
+            "publish your reviewed work and return to a clean Git revision.",
+        ),
+        (
+            not remote.get("issue"),
+            "ask your coach to verify your actual lesson issue link.",
+        ),
+        (
+            not remote.get("pr"),
+            "publish the reviewed work in a PR and record its actual link.",
+        ),
+    )
+    for missing, action in prerequisites:
+        if missing:
+            return action
+    if not remote.get("ci"):
+        return ci_next_step(remote)
+    if not publication["revision_matches"]:
+        return "use the clean revision from your linked PR; your coach can help."
+    if not remote.get("merged"):
+        return "review the passing PR with your coach and decide whether to merge it."
+    if remote.get("issue_state") == "open":
+        return "review the kept result with your coach, then close the lesson issue."
+    return (
+        "ask your coach to verify the remaining GitHub evidence; "
+        "completion is unverified."
+    )
+
+
+def ci_next_step(remote):
+    """Distinguish a running or missing job from a completed unsuccessful one."""
+    conclusions = remote.get("checks", {}).values()
+    if any(value not in {None, "not found", "success"} for value in conclusions):
+        return (
+            "inspect the failed or skipped check/windows job with your coach, "
+            "fix the cause and rerun the checks."
         )
+    return (
+        "wait for pending check/windows jobs to finish; "
+        "ask your coach to inspect the PR if either job is missing."
+    )

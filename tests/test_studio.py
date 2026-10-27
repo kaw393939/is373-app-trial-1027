@@ -3,6 +3,7 @@
 import argparse
 import io
 import json
+import os
 from pathlib import Path
 import socket
 import subprocess
@@ -248,9 +249,39 @@ def test_occupied_port_is_not_taken_from_another_app(monkeypatch, workspace):
     monkeypatch.setattr(studio, "require_python", lambda: Path("python"))
     with socket.socket() as listener:
         listener.bind(("127.0.0.1", 0))
+        listener.listen()
         port = listener.getsockname()[1]
         with pytest.raises(ValueError, match="already in use"):
             studio.run(argparse.Namespace(port=port, plain=False))
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX TIME_WAIT restart semantics")
+def test_recent_connection_does_not_block_restarting_a_stopped_app(
+    monkeypatch, workspace
+):
+    monkeypatch.setattr(studio, "require_python", lambda: Path("prepared-python"))
+    calls = []
+    monkeypatch.setattr(
+        subprocess, "run", lambda command, **_kwargs: calls.append(command)
+    )
+    with socket.socket() as listener:
+        listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        listener.bind(("127.0.0.1", 0))
+        listener.listen()
+        port = listener.getsockname()[1]
+        with socket.create_connection(("127.0.0.1", port)) as client:
+            connection, _ = listener.accept()
+            connection.shutdown(socket.SHUT_WR)
+            connection.close()
+            assert client.recv(1) == b""
+    # The server closed first, leaving a real recent connection in TIME_WAIT.
+    # A plain bind recreates the student's original false port-conflict error.
+    with socket.socket() as unreusable:
+        with pytest.raises(OSError):
+            unreusable.bind(("127.0.0.1", port))
+    studio.run(argparse.Namespace(port=port, plain=True))
+    assert len(calls) == 1
+    assert calls[0][calls[0].index("--port") + 1] == str(port)
 
 
 def test_run_uses_explicit_factory_and_loopback_settings(monkeypatch, workspace):
@@ -446,3 +477,56 @@ def test_role_command_reenters_virtualenv_even_when_python_is_symlinked(
             "admin",
         ]
     ]
+
+
+@pytest.mark.parametrize(
+    "remote,next_action,unwanted",
+    [
+        (
+            {
+                "ci": False,
+                "merged": True,
+                "issue_state": "closed",
+                "checks": {"check": None, "windows": None},
+            },
+            "wait for pending check/windows jobs",
+            "close the lesson issue",
+        ),
+        (
+            {"ci": True, "merged": False, "issue_state": "open"},
+            "decide whether to merge",
+            "close the lesson issue",
+        ),
+        (
+            {
+                "ci": False,
+                "merged": True,
+                "issue_state": "closed",
+                "checks": {"check": "success", "windows": "failure"},
+            },
+            "inspect the failed or skipped check/windows job",
+            "close the lesson issue",
+        ),
+        (
+            {"ci": True, "merged": True, "issue_state": "open"},
+            "close the lesson issue",
+            "decide whether to merge",
+        ),
+    ],
+)
+def test_progress_names_the_actual_remaining_publication_step(
+    capsys, remote, next_action, unwanted
+):
+    result = {
+        "lesson": "APP-001",
+        "checks": {"current": True},
+        "learner_records": {name: True for name in progress.CHECKPOINTS},
+        "publication": {"tracked": True, "clean": True, "revision_matches": True},
+        "github": {"issue": True, "pr": True, "details": [], **remote},
+        "ready_for_instructor_review": False,
+    }
+    progress.display(result)
+    output = capsys.readouterr().out
+    assert next_action in output
+    assert unwanted not in output
+    assert "Evidence ready for instructor review" not in output

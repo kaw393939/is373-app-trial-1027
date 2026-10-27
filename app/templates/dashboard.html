@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Your dashboard{% endblock %}
+{% block content %}
+<section class="panel" aria-labelledby="dashboard-title">
+  <p class="eyebrow">Members area</p>
+  <h1 id="dashboard-title">Your member space</h1>
+  <p>Welcome, <strong>{{ user.username }}</strong>. Your role is <strong>{{ user.role }}</strong>.</p>
+  <p>Good to have you here. This is your place in the project.</p>
+  {% if request.app.state.feature_flags().roles and user.role == 'admin' %}<p><a href="/admin">Open the admin page</a></p>{% endif %}
+  <form method="post" action="/logout">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <button type="submit" class="button">Log out</button>
+  </form>
+</section>
+{% endblock %}

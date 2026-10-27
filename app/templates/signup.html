@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Create your account{% endblock %}
+{% block content %}
+<section class="panel" aria-labelledby="signup-title">
+  <p class="eyebrow">Join the project</p>
+  <h1 id="signup-title">Create your account</h1>
+  <p>Create an account to open your member space. Choose a passphrase you do not use anywhere else.</p>
+  {% if error %}<p role="alert" class="notice">{{ error }}</p>{% endif %}
+  <form method="post" action="/signup" class="form-stack">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="username" minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" value="{{ username }}" required aria-describedby="username-help">
+    <small id="username-help">3–32 letters, numbers, or underscores. Usernames are not case sensitive.</small>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="new-password" minlength="15" maxlength="128" required aria-describedby="password-help">
+    <small id="password-help">15–128 characters. Spaces are welcome.</small>
+    <button type="submit" class="button">Create account</button>
+  </form>
+  <p>Already a member? <a href="/login">Log in</a>.</p>
+</section>
+{% endblock %}
