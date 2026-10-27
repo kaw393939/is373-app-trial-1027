@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<section class="panel" aria-labelledby="login-title">
+  <p class="eyebrow">Welcome back</p>
+  <h1 id="login-title">Log in</h1>
+  {% if created %}<p role="status" class="notice">Account created. Log in to open your dashboard.</p>{% endif %}
+  {% if error %}<p role="alert" class="notice">{{ error }}</p>{% endif %}
+  <form method="post" action="/login" class="form-stack">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="username" maxlength="32" value="{{ username }}" required>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+    <button type="submit" class="button">Log in</button>
+  </form>
+  <p>Need an account? <a href="/signup">Create an account</a>.</p>
+</section>
+{% endblock %}

@@ -67,6 +67,10 @@ def run(args):
         raise ValueError("Choose an available local port between 1024 and 65535.")
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+            if os.name != "nt":
+                # Match Uvicorn's POSIX restart behavior after a closed connection.
+                # Windows SO_REUSEADDR could share an active listener, so omit it.
+                probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             probe.bind(("127.0.0.1", args.port))
     except OSError as error:
         raise ValueError(

@@ -19,13 +19,13 @@ Accuracy approval is not proof of understanding. Label simulated trials explicit
 
 ## APP-002
 
-- Prediction: Pending.
-- Check interpretation: Pending.
-- Browser observation: Pending.
-- Keep decision: Pending.
-- Review: Pending.
-- Help/gaps: Pending.
-- Evidence links / next step: Keep APP-001 before agreeing this lesson.
+- Prediction: Synthetic learner: “Before login it should block me. After login it should return my account details,” unsure which status code; coach explained 401/200 at the point of use.
+- Check interpretation: Synthetic learner: copied-cookie replay would catch logout merely clearing the browser cookie while leaving the login valid. Actual copied-cookie request after POST logout returned401.
+- Browser observation: Synthetic inspection of supplied actual UI: after logout, Member space returned to Log in rather than the dashboard. Instructor actually completed signup, wrong/correct login, dashboard and logout in the browser.
+- Keep decision: Synthetic learner: “I’d keep it. Both checks suggest logout actually ends access.” Also adopted retaining a validated username after wrong-password errors, with passwords blank.
+- Review: Synthetic learner reviewed these excerpts before publication: “That matches my simulated replies.” Asked to retain “suggest” rather than claim every account security case is covered. Accuracy approval only.
+- Help/gaps: Instructor AI adopted the upstream prepared account example, explained response codes, corrected login recovery and applied baseline restart/progress maintenance. These are assisted model replies, not real student observations or understanding.
+- Evidence links / next step: [Own issue #3](https://github.com/kaw393939/is373-app-trial-1027/issues/3); actual full cumulative APP-002 checks passed: Black/Pylint, 98 foundation +14 feature contracts +2 Chromium journeys. Review this record before publishing.
 
 ## APP-003
 
